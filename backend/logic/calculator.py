@@ -21,7 +21,7 @@ def division(x,y):
 
 def exponent(x,y): 
     currentX = x
-    while y != 0:
+    while y != 1:
         currentX *= x   
         y -= 1
     return currentX
