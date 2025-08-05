@@ -18,7 +18,14 @@ def division(x,y):
         return result
     except ZeroDivisionError as e:
         return f"Caught an error: {e}"
-        
+
+def exponent(x,y): 
+    currentX = x
+    while y != 0:
+        currentX *= x   
+        y--
+    return currentX
+
 
 # Example usage (you can delete or change these)
 print("Add:", add(4, 2))          # 6
