@@ -67,3 +67,22 @@ pnpm-debug.log*
 # Vue-specific files (optional)
 *.local
 *.log
+
+# Ignore Docker image layers and containers (if stored locally)
+**/__pycache__/
+*.pyc
+
+# Ignore Docker-specific files
+docker-compose.override.yml
+
+# Ignore Docker volumes and local data (if any)
+volumes/
+
+# Ignore local environment files (if any)
+.env
+
+# Ignore Docker build cache (optional)
+.dockerignore
+
+# Ignore Docker logs (optional)
+*.log
