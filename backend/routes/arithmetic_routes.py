@@ -2,6 +2,6 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-@router.get("/add")
+@router.get("/")
 async def add_route():
-    return {"message": "Add route here"}
+    return {"message": "Hello Calculator App"}
