@@ -28,3 +28,15 @@ jobs:
         run: pytest backend_tests/
         env:
           PYTHONPATH: ${{ github.workspace }}
+
+ # Docker Build step
+      - name: Build Docker image
+        run: docker build -t my-fastapi-app .
+
+      # Optional: Run container to do a basic smoke test
+      - name: Test Docker container runs
+        run: |
+          docker run --rm -d -p 8000:8000 --name test_container my-fastapi-app
+          sleep 5
+          curl -f http://localhost:8000/ || exit 1
+          docker stop test_container
