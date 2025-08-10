@@ -26,3 +26,5 @@ jobs:
 
       - name: Run backend logic tests
         run: pytest backend_tests/
+        env:
+          PYTHONPATH: ${{ github.workspace }}
