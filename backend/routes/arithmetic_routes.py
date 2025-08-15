@@ -10,20 +10,20 @@ async def add_route():
 
 @router.post("/add")
 def addition(request: multiValueOperations):
-    return add(request.x, request.y)
+    return {"result": add(request.x, request.y)}
 
 @router.post("/sub")
 def subtraction(request: multiValueOperations):
-    return sub(request.x, request.y)   
+    return {"result": sub(request.x, request.y)}   
 
 @router.post("/multiply")
 def multiplication(request: multiValueOperations):
-    return multiply(request.x, request.y) 
+    return {"result": multiply(request.x, request.y)} 
 
 @router.post("/divide")
 def division_route(request: divisionOperation):
-    return division(request.x, request.y) 
+    return {"result": division(request.x, request.y)} 
 
 @router.post("/exponent")
 def exponential(request: multiValueOperations):
-    return exponent(request.x, request.y)
+    return {"result": exponent(request.x, request.y)}
