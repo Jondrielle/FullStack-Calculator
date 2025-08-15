@@ -5,7 +5,7 @@ click==8.2.1
 colorama==0.4.6
 fastapi==0.116.0
 greenlet==3.2.3
-h11==0.16.0
+h11>=0.14.0,<0.15   # compatible with httpx 0.24.0
 httptools==0.6.4
 idna==3.10
 iniconfig==2.1.0
@@ -23,7 +23,7 @@ sqlmodel==0.0.24
 starlette==0.46.2
 typing-inspection==0.4.1
 typing_extensions==4.14.1
-uvicorn==0.35.0
+uvicorn>=0.23.2     # updated to be compatible with httpx
 watchfiles==1.1.0
 webencodings==0.5.1
 websockets==15.0.1
