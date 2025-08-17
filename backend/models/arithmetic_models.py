@@ -13,3 +13,6 @@ class divisionOperation(BaseModel):
         if value == 0:
             raise ValueError('Division by zero is not allowed')
         return value
+
+class mathExpression(BaseModel):
+    expr: str

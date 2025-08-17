@@ -20,37 +20,43 @@ function append(char){
 </script>
 
 <template>
-	<div>
+	<div style= "text-align:center">
 		<input v-model="expression" placeholder="0" />
 		<div class = "numberButtons">
-		  	<div>
-			    <button @click="append('1')">1</button>
-			    <button @click="append('2')">2</button>
-			    <button @click="append('3')">3</button>
-			    <button @click="append('+')">+</button>
-		  	</div>
+			<div>
+			  <button @click="append('Clear')">Clear</button>
+			  <button @click="append('/')">/</button>
+		  </div>
+		  <div>
+			  <button @click="append('1')">1</button>
+			  <button @click="append('2')">2</button>
+			  <button @click="append('3')">3</button>
+			  <button @click="append('+')">+</button>
+		  </div>
 			<div>
 				<button @click="append('4')">4</button>
-			    <button @click="append('5')">5</button>
-			    <button @click="append('6')">6</button>
-			    <button @click="append('-')">-</button>
+			  <button @click="append('5')">5</button>
+			  <button @click="append('6')">6</button>
+			  <button @click="append('-')">-</button>
 			</div>
 	  
-	    	<div>
-			    <button @click="append('7')">7</button>
-			    <button @click="append('8')">8</button>
-			    <button @click="append('9')">9</button>
-			    <button @click="append('*')">*</button>
-		  	</div>
+	   	<div>
+		    <button @click="append('7')">7</button>
+		    <button @click="append('8')">8</button>
+			  <button @click="append('9')">9</button>
+		    <button @click="append('*')">*</button>
+		 	</div>
 	  
-		  	<div>
-		    	<button @click="append('0')">0</button>
-		    	<button @click="append('^')">^</button>
-		    </div>
+		  <div>
+		    <button @click="append('0')">0</button>
+		    <button @click="append('.')">.</button>
+		   	<button @click="append('^')">^</button>
+		   	<button @click="append('=')">=</button>
+		   	<p v-if="result !== null">Result: {{ result }}</p>
+	    </div>
 		</div>
   </div>
-    <button>Calculate</button>
-    <p v-if="result !== null">Result: {{ result }}</p>
+
 
 </template>
 
@@ -61,7 +67,5 @@ input{
 	border-color: lightgray;
 }
 .numberButtons{
-	border-radius: 10000px;	
-	width: 300px;
 }
 </style>

@@ -1,3 +1,5 @@
+import re
+
 def add(x,y):
     return x + y
 
@@ -12,26 +14,53 @@ def multiply(x,y):
     except Exception as e:
         return f"Error: {e}"
 
-def division(x,y):
-    try:
-        result = x / y
-        return result
-    except ZeroDivisionError as e:
-        return f"Caught an error: {e}"
+def divide(x,y):
+    if y == 0:
+        return "Division by zero is not allowed"
+    return x / y
 
-def exponent(x,y): 
-    return x ** y
+def power(x,y): 
+    return float(x) ** float(y)
 
 
-# Example usage (you can delete or change these)
-print("Add:", add(4, 2))          # 6
-print("Add:", add((4/2), 1))         # 3
+def evaluate_expression(expr):
+    # Regex to match numbers (including negative and decimals) and operators
+    tokens = re.findall(r'-?\d+(?:\.\d+)?|[\+\-\*/\^]', expr)
 
-print("Subtract:", sub(10, 3))    # 7
+    # Convert numeric tokens to float
+    for i in range(len(tokens)):
+        if re.match(r'-?\d+(?:\.\d+)?', str(tokens[i])):
+            tokens[i] = float(tokens[i])
 
-print("Multiply:", multiply(3, 3)) # 9
-print("Multiply:", multiply(0, 1)) # 0
-print("Multiply:", multiply(120, -2)) # 0
+    # Handle precedence: ^ > * / > + -
+    def apply_operator(op_index):
+        op = tokens[op_index]
+        left = tokens[op_index - 1]
+        right = tokens[op_index + 1]
 
-print("Divide:", division(10, 2)) # 5.0
-print("Divide by 0:", division(10, 0)) # Caught an error: division by zero
+        if op == '+':
+            result = add(left, right)
+        elif op == '-':
+            result = subtract(left, right)
+        elif op == '*':
+            result = multiply(left, right)
+        elif op == '/':
+            result = divide(left, right)
+        elif op == '^':
+            result = power(left, right)
+        else:
+            raise ValueError(f"Unknown operator: {op}")
+
+        # Replace the three tokens (left, op, right) with the result
+        tokens[op_index - 1:op_index + 2] = [result]
+
+    # Operator precedence list
+    precedence = ['^', '*', '/', '+', '-']
+
+    # Evaluate expression based on precedence
+    for op in precedence:
+        while op in tokens:
+            op_index = tokens.index(op)
+            apply_operator(op_index)
+
+    return tokens[0]
