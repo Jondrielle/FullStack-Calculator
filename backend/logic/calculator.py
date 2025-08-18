@@ -68,7 +68,7 @@ def evaluate_expression(expr):
                 op_index = tokens.index(op)
                 apply_operator(op_index)
     except ZeroDivisionError:
-        return "Divide by zero is not allowed"
+        return "Division by zero is not allowed"
     except Exception:
         return "Invalid operation on non-numeric values"
 
