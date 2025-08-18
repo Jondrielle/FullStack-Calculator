@@ -16,7 +16,7 @@ def multiply(x,y):
 
 def divide(x,y):
     if y == 0:
-        return "Division by zero is not allowed"
+        raise ZeroDivisionError("Divide by zero is not allowed")
     return x / y
 
 def power(x,y): 
@@ -24,15 +24,20 @@ def power(x,y):
 
 
 def evaluate_expression(expr):
-    # Regex to match numbers (including negative and decimals) and operators
-    tokens = re.findall(r'-?\d+(?:\.\d+)?|[\+\-\*/\^]', expr)
+    expr = expr.replace(' ', '')
+
+    # Invalid operator sequences except for negative numbers
+    if re.search(r'(?<![\d)])[\+\*/]{2,}|--{2,}', expr):
+        return "Invalid operation on non-numeric values"
+
+    # Tokens: numbers (including negative) and operators
+    tokens = re.findall(r'(?<!\d)-?\d+(?:\.\d+)?|[\+\-\*/\^]', expr)
 
     # Convert numeric tokens to float
     for i in range(len(tokens)):
         if re.match(r'-?\d+(?:\.\d+)?', str(tokens[i])):
             tokens[i] = float(tokens[i])
 
-    # Handle precedence: ^ > * / > + -
     def apply_operator(op_index):
         op = tokens[op_index]
         left = tokens[op_index - 1]
@@ -45,22 +50,26 @@ def evaluate_expression(expr):
         elif op == '*':
             result = multiply(left, right)
         elif op == '/':
-            result = divide(left, right)
+            result = divide(left, right)  # Will raise ZeroDivisionError if needed
         elif op == '^':
             result = power(left, right)
         else:
             raise ValueError(f"Unknown operator: {op}")
 
-        # Replace the three tokens (left, op, right) with the result
+
         tokens[op_index - 1:op_index + 2] = [result]
 
-    # Operator precedence list
+        
     precedence = ['^', '*', '/', '+', '-']
 
-    # Evaluate expression based on precedence
-    for op in precedence:
-        while op in tokens:
-            op_index = tokens.index(op)
-            apply_operator(op_index)
+    try:
+        for op in precedence:
+            while op in tokens:
+                op_index = tokens.index(op)
+                apply_operator(op_index)
+    except ZeroDivisionError:
+        return "Divide by zero is not allowed"
+    except Exception:
+        return "Invalid operation on non-numeric values"
 
     return tokens[0]
