@@ -16,7 +16,7 @@ def multiply(x,y):
 
 def divide(x,y):
     if y == 0:
-        raise ZeroDivisionError("Divide by zero is not allowed")
+        raise ZeroDivisionError("Division by zero is not allowed")
     return x / y
 
 def power(x,y): 
@@ -59,7 +59,7 @@ def evaluate_expression(expr):
 
         tokens[op_index - 1:op_index + 2] = [result]
 
-        
+
     precedence = ['^', '*', '/', '+', '-']
 
     try:
