@@ -20,7 +20,7 @@ async function calculate() {
   if (!expression.value) return
 
   try {
-    const response = await api.post('/calculate', {
+    const response = await api.post('/api/calculate', {
       expr: expression.value  // <-- matches backend key
     })
 

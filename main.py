@@ -1,18 +1,25 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.routes.arithmetic_routes import router  # import router from your routes file
-
+from fastapi.staticfiles import StaticFiles
+from backend.routes.arithmetic_routes import router
 
 app = FastAPI()
 
-origins = [ "http://localhost:5173"]
+origins = [
+    "https://<your-netlify-site>.netlify.app",  # will update after Netlify deploy
+]
 
+# ✅ Add CORS middleware before including routers
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins,  # for testing; later change to ["http://localhost:5173"] or your deployed Netlify URL
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["*"],  # must include OPTIONS
     allow_headers=["*"],
 )
 
-app.include_router(router)
+# API routes
+app.include_router(router, prefix="/api")
+
+# Serve frontend build
+app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
