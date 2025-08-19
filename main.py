@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -21,5 +22,7 @@ app.add_middleware(
 # API routes
 app.include_router(router, prefix="/api")
 
-# Serve frontend build
-app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
+# Serve frontend build only if it exists
+frontend_path = "frontend/dist"
+if os.path.isdir(frontend_path):
+    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")

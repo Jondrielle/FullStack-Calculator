@@ -8,7 +8,7 @@ router = APIRouter()
 async def add_route():
     return {"message": "Hello Calculator App"}
 
-@router.post("/calculate")
+@router.post("/api/calculate")
 async def calculate(expression: mathExpression):
     return {"result": evaluate_expression(expression.expr)}
 
