@@ -1,47 +1,31 @@
-# ================================
-# Stage 1 - Build the Vue frontend
-# ================================
-FROM node:18 AS frontend-builder
+# ----------------------
+# Stage 1: Build frontend
+# ----------------------
+FROM node:20 AS frontend-build
+WORKDIR /app/frontend
 
-# Set working dir for frontend
-WORKDIR /frontend
-
-# Copy only package.json and lockfile first (for caching npm install)
 COPY frontend/package*.json ./
+RUN npm install --legacy-peer-deps
 
-# Install frontend dependencies
-RUN npm install
-
-# Copy the rest of the frontend code
-COPY frontend/ .
-
-# Build Vue app
+COPY frontend/ ./
 RUN npm run build
 
-
-# ================================
-# Stage 2 - Backend (FastAPI)
-# ================================
-FROM python:3.11-slim
-
-# Set working dir for backend
+# ----------------------
+# Stage 2: Backend
+# ----------------------
+FROM python:3.11-slim AS backend
 WORKDIR /app
 
-# Copy requirements first (cache pip install)
-COPY requirements.txt .
+# Install system dependencies
+RUN apt-get update && apt-get install -y build-essential
 
-# Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+COPY backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend code
-COPY . .
+COPY backend/ ./
+COPY --from=frontend-build /app/frontend/dist ./frontend_dist
 
-# Copy Vue dist from first stage into backend container
-COPY --from=frontend-builder /frontend/dist ./frontend/dist
-
-# Expose FastAPI port
+ENV FRONTEND_DIST=/app/frontend_dist
 EXPOSE 8000
 
-# Run FastAPI with uvicorn
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
