@@ -4,10 +4,6 @@ from backend.models.arithmetic_models import mathExpression,multiValueOperations
 
 router = APIRouter()
 
-@router.get("/")
-async def root():
-    return {"message": "Hello Calculator App"}
-
 @router.post("/calculate")
 async def calculate(expression: mathExpression):
     return {"result": evaluate_expression(expression.expr)}
