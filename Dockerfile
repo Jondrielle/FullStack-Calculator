@@ -19,10 +19,10 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y build-essential
 
-COPY backend/requirements.txt ./
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY backend/ ./
+COPY . ./
 COPY --from=frontend-build /app/frontend/dist ./frontend_dist
 
 ENV FRONTEND_DIST=/app/frontend_dist
