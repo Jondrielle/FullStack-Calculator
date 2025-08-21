@@ -1,4 +1,6 @@
+# -------------------
 # Logs
+# -------------------
 logs
 *.log
 npm-debug.log*
@@ -7,17 +9,43 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-.DS_Store
-dist
-dist-ssr
-coverage
+# -------------------
+# Dependencies / Build Artifacts
+# -------------------
+node_modules/
+dist/
+dist-ssr/
+coverage/
+*.tsbuildinfo
+
+# -------------------
+# Python / FastAPI
+# -------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+.venv/
+env/
+venv/
+
+# -------------------
+# Environment Files
+# -------------------
+.env
 *.local
 
+# -------------------
+# Cypress (tests)
+# -------------------
 /cypress/videos/
 /cypress/screenshots/
 
-# Editor directories and files
+# -------------------
+# Editor / OS-specific
+# -------------------
+.DS_Store
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -27,4 +55,7 @@ coverage
 *.sln
 *.sw?
 
-*.tsbuildinfo
+# -------------------
+# Docker
+# -------------------
+docker-compose.override.yml
