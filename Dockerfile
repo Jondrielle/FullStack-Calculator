@@ -16,16 +16,15 @@ RUN npm run build
 FROM python:3.11-slim AS backend
 WORKDIR /app
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y build-essential
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . ./
-COPY --from=frontend-build /app/frontend/dist ./frontend_dist
+COPY --from=frontend-build /app/frontend/dist ./frontend/dist  
 
-ENV FRONTEND_DIST=/app/frontend_dist
+ENV FRONTEND_DIST=/app/frontend/dist  
 EXPOSE 8000
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
