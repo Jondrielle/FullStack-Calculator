@@ -57,14 +57,14 @@ calculator/
 - Version Control: Git, GitHub
 
 ## Getting Started
-### Prerequisites 
+#### Prerequisites: 
 - Python 3.8+
 - Git
 - Node.js and npm 
 - Docker (optional, for containerized setup but recommended for easier setup)
 
 ## Development 
-### Option 1: Without Docker (Local Development)
+#### Option 1: Without Docker (Local Development):
 1. Clone the repo
    ```
      git clone \n
@@ -83,7 +83,7 @@ calculator/
      npm run dev
    ```
 4. Open http://localhost:5173 in your browser to use the calculator
-   #### Environment Variables:
+   ##### Environment Variables:
    - Create a .env in the root (if needed) 
     ```
      Frontend_URLS=http://localhost:5173
@@ -91,7 +91,7 @@ calculator/
   - This allows the backend to handle CORS correctly
     
 
-### Option 2: With Docker (Recommended) 
+#### Option 2: With Docker (Recommended): 
 1. Build Docker Image
   ` docker build -t calculator-app `
 2. Run the container
@@ -100,19 +100,19 @@ calculator/
    - Docker handles both backend and frontend automatically, serving the built frontend through FastAPI
 
 ## Deployment
-### Option 1: Free-tier Render + Netlify (without Docker)
-#### - Backend: Deploy FastAPI app to Render
+#### Option 1: Free-tier Render + Netlify (without Docker):
+##### - Backend: Deploy FastAPI app to Render:
 - Build command: pip install -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000
 - Free-tier limitations: auto-sleep, limited CPU and RAM
 
-#### - Frontend: Deploy Vite project to Netlify
+##### - Frontend: Deploy Vite project to Netlify:
 - Build command: npm run build
 - Publish directory: dist
 - Free-tier limitations: slower builds, max bandwidth limits
 
 - Upddate .env or origins in backend to allow requests from your deployed Netlify URL
 
-### Option 2: Docker Deployment (Render or AWS) 
+#### Option 2: Docker Deployment (Render or AWS):
 1. Build Docker image contraining both frontend and backend 
 2. Push to Docker registry(optional) and deploy on Render or AWS
 3. Docker automatically handles installing dependencies and serving static files
@@ -123,20 +123,20 @@ calculator/
    ```
 5. Access your live app at the URL provided by your host 
 
-### Backend (Render)
+#### Backend (Render):
 1. Push your repository to GitHub
 2. Connect Render to your GitHub repo
 3. Use Docker as the environment
 4. Render automatically builds and deploys your backend
 
-### Frontend (Netlify)
+#### Frontend (Netlify):
 1. Push your frontend code to GitHub
 2. Connect Netlify to your GitHub repo
 3. Set the build command: npm run build
 4. Set the publish directory: dist
 5. Configure VITE_API_URL in Netlify environment variables
 
-### After deployment:
+#### After deployment:
 - Your frontend is live on Netlify
 - Your backend API is live on Render
 - CORS and environment variables ensure proper communication
