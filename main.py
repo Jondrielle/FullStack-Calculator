@@ -24,11 +24,12 @@ app.add_middleware(
 # API routes
 app.include_router(router, prefix="/api")
 
-# serve frontend build if exists
-frontend_path = "frontend/dist"
+# Serve frontend build only if it exists
+frontend_path = os.getenv("FRONTEND_DIST", "frontend_dist")
+
 if os.path.isdir(frontend_path):
     app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
-
+    
 @app.get("/")
 async def root():
     return {"message": "Hello Calculator App"}
