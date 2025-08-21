@@ -25,7 +25,7 @@ app.add_middleware(
 app.include_router(router, prefix="/api")
 
 # Serve frontend build only if it exists
-frontend_path = os.getenv("FRONTEND_DIST", "frontend_dist")
+frontend_path = "frontend/dist"
 
 if os.path.isdir(frontend_path):
     app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
