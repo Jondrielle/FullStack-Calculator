@@ -6,8 +6,13 @@ from backend.routes.arithmetic_routes import router
 
 app = FastAPI()
 
-origins = ["https://fullstack-calculator-app.netlify.app/",
-        "http://localhost:5173",]
+# -------------------
+# CORS configuration
+# -------------------
+origins = [
+    "https://fullstack-calculator-app.netlify.app",
+    "http://localhost:5173",
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,13 +22,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# -------------------
+# API routes
+# -------------------
 app.include_router(router, prefix="/api")
 
-frontend_path = ("frontend/dist")  # <- must match Docker ENV
+# -------------------
+# Frontend static files
+# -------------------
+frontend_path = "frontend/dist"
 if os.path.isdir(frontend_path):
-    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+    # Mount frontend under /frontend
+    app.mount("/frontend", StaticFiles(directory=frontend_path, html=True), name="frontend")
 
-print("Frontend path exists?", os.path.isdir(frontend_path))
+# -------------------
+# JSON root endpoint
+# -------------------
 @app.get("/")
 async def root():
     return {"message": "Hello Calculator App"}
+
+# Health check
+@app.get("/health")
+async def health():
+    return {"status": "ok"}

@@ -27,8 +27,8 @@ def evaluate_expression(expr):
     expr = expr.replace(' ', '')
 
     # Invalid operator sequences except for negative numbers
-   if re.search(r'(?<!\d)[*/^]{2,}|(?<!\d)[+]{2,}|(?<!\d)-{3,}|[+\-*/^]{2,}(?=[*/^])', expr):
-    return "Invalid operation: not a valid sequence of operators"
+    if re.search(r'(?<!\d)[*/^]{2,}|(?<!\d)[+]{2,}|(?<!\d)-{3,}|[+\-*/^]{2,}(?=[*/^])', expr):
+            return "Invalid operation: not a valid sequence of operators"
 
     # Tokens: numbers (including negative) and operators
     tokens = re.findall(r'(?<!\d)-?\d+(?:\.\d+)?|[\+\-\*/\^]', expr)
