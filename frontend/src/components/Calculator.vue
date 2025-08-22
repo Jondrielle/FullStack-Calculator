@@ -21,22 +21,23 @@ async function calculate() {
 
   try {
     const response = await api.post('/calculate', {
-      expr: expression.value  // <-- matches backend key
+      expr: expression.value
     })
 
-    result.value = response.data.result
-    expression.value = result.value  // clear input after calculation
+    const res = response.data
+
+    if (res.error) {                // Check if backend returned an error
+      result.value = res.error
+      expression.value = ''         // Clear input after error
+    } else {
+      result.value = res.result
+      expression.value = ''         // Clear input after successful calculation
+    }
   } catch (error) {
     console.error(error)
     result.value = 'Error'
     expression.value = ''
   }
-
-  // Clear input if backend returned an error message
-  if (typeof result.value === 'string' && result.value.startsWith('Invalid')) {
-    expression.value = ''
-  }
-  
 }
 </script>
 
