@@ -6,7 +6,7 @@ from backend.routes.arithmetic_routes import router
 
 app = FastAPI()
 
-origins = ["https://fullstack-calculator-app.netlify.app",
+origins = ["https://fullstack-calculator-app.netlify.app/",
         "http://localhost:5173",]
 
 app.add_middleware(
