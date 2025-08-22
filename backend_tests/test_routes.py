@@ -27,7 +27,7 @@ def test_connect_to_root():
     ]
 )
 def test_evaluate_expression_route(expr, expected):
-    response = client.post("/api/calculate", json= {"expr": expr})
+    response = client.post("/calculate", json= {"expr": expr})
     print(response.json())
     assert response.json() == {"result": expected}
 
