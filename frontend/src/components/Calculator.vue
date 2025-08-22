@@ -31,6 +31,12 @@ async function calculate() {
     result.value = 'Error'
     expression.value = ''
   }
+
+  // Clear input if backend returned an error message
+  if (typeof result.value === 'string' && result.value.startsWith('Invalid')) {
+    expression.value = ''
+  }
+  
 }
 </script>
 
