@@ -6,7 +6,8 @@ from backend.routes.arithmetic_routes import router
 
 app = FastAPI()
 
-origins = os.getenv("FRONTEND_URLS", "http://localhost:5173").split(",")
+origins = ["https://fullstack-calculator-app.netlify.app",
+        "http://localhost:5173",]
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,7 +19,7 @@ app.add_middleware(
 
 app.include_router(router, prefix="/api")
 
-frontend_path = os.getenv("FRONTEND_DIST", "frontend/dist")  # <- must match Docker ENV
+frontend_path = ("frontend/dist")  # <- must match Docker ENV
 if os.path.isdir(frontend_path):
     app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
 
