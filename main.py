@@ -42,7 +42,3 @@ if os.path.isdir(frontend_path):
 async def root():
     return {"message": "Hello Calculator App"}
 
-# Health check
-@app.get("/health")
-async def health():
-    return {"status": "ok"}
