@@ -33,7 +33,7 @@ app.include_router(router, prefix="/api")
 frontend_path = "frontend/dist"
 if os.path.isdir(frontend_path):
     # Mount frontend under /frontend
-    app.mount("/frontend", StaticFiles(directory=frontend_path, html=True), name="frontend")
+    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
 
 # -------------------
 # JSON root endpoint
