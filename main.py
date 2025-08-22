@@ -22,6 +22,7 @@ frontend_path = os.getenv("FRONTEND_DIST", "frontend/dist")  # <- must match Doc
 if os.path.isdir(frontend_path):
     app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
 
+print("Frontend path exists?", os.path.isdir(frontend_path))
 @app.get("/")
 async def root():
     return {"message": "Hello Calculator App"}
