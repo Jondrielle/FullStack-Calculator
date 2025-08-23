@@ -33,8 +33,7 @@ calculator/
 ├── main.py
 ├── .gitignore
 ├── README.md
-├── requirements.txt
-└── .env
+└── requirements.txt
   
 ```
 </details> 
@@ -52,7 +51,7 @@ calculator/
 
 ## Technologies Used
 - Backend: Python, FastAPI, Uvicorn
-- Frontend: React, Vite, Axios
+- Frontend: Vue, Vite, Axios
 - Deployment: Docker, Render, Netlify
 - Version Control: Git, GitHub
 
@@ -83,17 +82,10 @@ calculator/
      npm run dev
    ```
 4. Open http://localhost:5173 in your browser to use the calculator
-   ##### Environment Variables:
-   - Create a .env in the root (if needed) 
-    ```
-     Frontend_URLS=http://localhost:5173
-    ```
-  - This allows the backend to handle CORS correctly
-    
 
 #### Option 2: With Docker (Recommended): 
 1. Build Docker Image
-  ` docker build -t calculator-app `
+  ` docker build -t calculator-app .`
 2. Run the container
   ` docker run -p 8000:8000 calculator-app`
 3. Visit http://localhost:8000 to use the calculator
@@ -134,7 +126,6 @@ calculator/
 2. Connect Netlify to your GitHub repo
 3. Set the build command: npm run build
 4. Set the publish directory: dist
-5. Configure VITE_API_URL in Netlify environment variables
 
 #### After deployment:
 - Your frontend is live on Netlify
@@ -149,7 +140,27 @@ calculator/
 
 ## CI/CD Integration
 - Github Actions can automatically build and push Docker images or deploy to Render/Netlify
-- Ensure environment variables are configured in CI/CD settings.
+- Ensure environment variables are configured in CI/CD settings
+
+## Optional: Using .env file
+#### Frontend/.env
+```
+VITE_API_URL=https://your-render-backend-url
+```
+- In api.js you can use this
+```
+import axios from "axios";
+
+const baseURL = import.meta.env.VITE_API_URL;
+export const api = axios.create{{baseURL}};
+```
+#### Backend/.env
+```
+FRONTEND_URLS=https://your-netlify-frontend-url,http://localhost:5173
+FRONTEND_DIST=frontend/dist
+```
+- Save and redeploy after setting variables
+Note: .env files are **not included** in the repo for security. You need to set the env variables manually when deploying on Netlify and Render 
 
 
 
