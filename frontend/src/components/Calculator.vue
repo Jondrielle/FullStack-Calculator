@@ -4,6 +4,7 @@ import api from '../services/api.js'
 
 const expression = ref('')
 const result = ref(null)
+const errorState = ref(false)
 
 function append(value) {
   if (value === 'AC') {
@@ -20,17 +21,26 @@ async function calculate() {
   if (!expression.value) return
 
   try {
-    const response = await api.post('/calculate', {
-      expr: expression.value  // <-- matches backend key
-    })
-
-    result.value = response.data.result
-    print(result.value)
-    expression.value = result.value  // clear input after calculation
+    const response = await api.post('/calculate', { expr: expression.value })
+    if (
+      typeof response.data.result === 'string' &&
+      (response.data.result.toLowerCase().includes('invalid') ||
+       response.data.result.toLowerCase().includes('division'))
+    ) {
+      // Treat it as an error
+      result.value = response.data.result;
+      expression.value = '';
+      errorState.value = true;
+    } else {
+      // Normal numeric result
+      result.value = response.data.result;
+      expression.value = String(response.data.result);
+      errorState.value = false;
+    }
   } catch (error) {
     console.error(error)
-    result.value = 'Error'
-    expression.value = ''
+    result.value = error.response?.data?.detail || 'Error'
+    errorState.value = true
   }
 }
 </script>
@@ -67,6 +77,7 @@ async function calculate() {
     <p v-if="result !== null">Result: {{ result }}</p>
   </div>
 </template>
+
 
 <style>
 .numberButtons {

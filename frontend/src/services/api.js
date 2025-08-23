@@ -1,16 +1,11 @@
-import axios from 'axios'
+import axios from 'axios';
 
-// Choose base URL based on environment
-const baseURL =
-  import.meta.env.MODE === 'development'
-    ? 'http://localhost:8000'           // local FastAPI backend
-    : 'https://fullstack-calculator.onrender.com'  // deployed backend
-
+// Use relative path — works both locally (Docker) and deployed
 const api = axios.create({
-  baseURL: baseURL,
+  baseURL: '/', // relative to current host
   headers: {
     "Content-Type": "application/json"
   }
-})
+});
 
-export default api
+export default api;
