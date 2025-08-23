@@ -25,6 +25,7 @@ async function calculate() {
     })
 
     result.value = response.data.result
+    print(result.value)
     expression.value = result.value  // clear input after calculation
   } catch (error) {
     console.error(error)

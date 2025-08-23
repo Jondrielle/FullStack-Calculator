@@ -12,7 +12,7 @@ from fastapi.testclient import TestClient
 client = TestClient(app)
 
 def test_connect_to_root():
-    response = client.get("/")
+    response = client.get("/api-root")
     print(response.json())
     assert response.status_code == 200
     assert response.json() == {"message": "Hello Calculator App"}

@@ -11,7 +11,9 @@ app = FastAPI()
 # -------------------
 origins = [
     "https://fullstack-calculator-app.netlify.app",
+    "http://localhost:5174",
     "http://localhost:5173",
+    "http://localhost:8000",
 ]
 
 app.add_middleware(
@@ -25,20 +27,23 @@ app.add_middleware(
 # -------------------
 # API routes
 # -------------------
-app.include_router(router, prefix="/api")
+app.include_router(router)
 
 # -------------------
 # Frontend static files
 # -------------------
 frontend_path = "frontend/dist"
-if os.path.isdir(frontend_path):
-    # Mount frontend under /frontend
-    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+
 
 # -------------------
 # JSON root endpoint
 # -------------------
-@app.get("/")
+@app.get("/api-root")
 async def root():
     return {"message": "Hello Calculator App"}
+
+if os.path.isdir(frontend_path):
+    # Mount frontend under /frontend
+    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+
 
